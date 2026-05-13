@@ -32,7 +32,6 @@ def ai_move(ai):
     return move_i, move_j
 
 def check_human_move(ai, mouse_pos):
-    # Human's turn
     human_move = utils.pos_pixel2map(mouse_pos[0], mouse_pos[1])
     move_i = human_move[0]
     move_j = human_move[1]
@@ -40,9 +39,7 @@ def check_human_move(ai, mouse_pos):
     if ai.isValid(move_i, move_j):
         ai.boardValue = ai.evaluate(move_i, move_j, ai.boardValue, -1, ai.nextBound)
         ai.setState(move_i, move_j, -1)
-        # ai.currentI, ai.currentJ = move_i, move_j
         ai.updateBound(move_i, move_j, ai.nextBound)
-        # ai.nextBound = bound
         return move_i, move_j
 
 

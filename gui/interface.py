@@ -1,9 +1,8 @@
-import pygame 
+import pygame
 import source.utils as utils
 
 pygame.init()
 
-# A class for the interface menu buttons
 class Button():
     def __init__(self, image, x_pos, y_pos, text_input, font_size):
         self.image = image
@@ -39,8 +38,8 @@ class Button():
 class Interface:
     def __init__(self, screen):
         self.screen = screen
-        self.SIZE = 540 #size of the board image
-        self.PIECE = 32 #size of the single pieces
+        self.SIZE = 540
+        self.PIECE = 32
         self.N = 15
         self.MARGIN = 23
         self.GRID = (self.SIZE - 2 * self.MARGIN) / (self.N-1)
@@ -54,10 +53,6 @@ class Interface:
         self.button_img = pygame.transform.scale(self.button_img, (150, 60))
 
     def drawBoard(self, board):
-        '''
-        Draw the board every time the game is refreshed
-        '''
-        # draw the background
         self.screen.blit(self.bg, (self.MARGIN, self.MARGIN))
 
         for i in range(self.N):
@@ -69,35 +64,24 @@ class Interface:
                     self.screen.blit(self.white_piece, (pos_x, pos_y))
 
     def drawResult(self, tie=False):
-        '''
-        Draw result when the game ends
-        '''
-        # Create font
         my_font = pygame.font.SysFont("arial", 30)
-        # render text
         if tie:
             label = my_font.render("It's a tie!", True, (255, 255, 255))
         else:
             label = my_font.render("You lost!", True, (255, 255, 255))
-        # create a rectangular object for the text surface object
         textRect = label.get_rect()
-        # set the center coordinate of the text surface object
         textRect.center = (750, 200)
         self.screen.blit(label, textRect)
 
-        # Restart button
         restart_button = Button(self.button_img, 750, 300, "Restart", 20)
         restart_button.draw(self.screen)
-        # Exit button
         exit_button = Button(self.button_img, 750, 380, "Exit", 20)
         exit_button.draw(self.screen)
 
     def restartChoice(self, mouse_pos):
-        # Restart button
         restart_button = Button(self.button_img, 750, 300, "Restart", 20)
         if restart_button.checkMousePos(mouse_pos):
             main()
-        # Exit button
         exit_button = Button(self.button_img, 750, 380, "Exit", 20)
         if exit_button.checkMousePos(mouse_pos):
             pygame.quit()
@@ -120,7 +104,6 @@ def main():
         interface.drawBoard(ai.boardMap)
         pygame.display.flip()
 
-        # AI makes the move
         if ai.turn == 0:
             ai.emptyCells -= 1
             ai.turn = 1
@@ -135,7 +118,6 @@ def main():
             interface.drawBoard(ai.boardMap)
             pygame.display.flip()
 
-        # Human makes the move
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
