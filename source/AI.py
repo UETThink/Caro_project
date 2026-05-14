@@ -4,7 +4,7 @@ import source.utils as utils
 
 sys.setrecursionlimit(1500)
 
-N = 15
+N = 9
 
 class GomokuAI():
     def __init__(self, depth=3):
@@ -76,7 +76,7 @@ class GomokuAI():
             axis_count = 1
             for (xdir, ydir) in axis:
                 axis_count += self.countDirection(i, j, xdir, ydir, state)
-                if axis_count >= 5:
+                if axis_count >= 4:
                     return True
         return False
 

@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 import sys
 sys.stdout.reconfigure(encoding='utf-8')
+
 import tkinter as tk
 from tkinter import messagebox
 
 sys.path.insert(0, '..')
+
 from source.caro_game import CaroGame, PLAYER_X, PLAYER_O, BOARD_SIZE
 
 
@@ -16,16 +18,20 @@ class NeonCaroGUI:
         self.root.resizable(False, False)
 
         self.root.update_idletasks()
+
         screen_width = self.root.winfo_screenwidth()
         screen_height = self.root.winfo_screenheight()
 
         display_scale = 0.9
+
         window_height = int(screen_height * display_scale)
         window_width = int(window_height * display_scale)
+
         x = (screen_width - window_width) // 2
-        y = 0 #Để cửa sổ xát mép trên màn hình
+        y = 0
+
         self.root.geometry(f"{window_width}x{window_height}+{x}+{y}")
-        
+
         self.scale = window_height / screen_height
 
         self.game = None
@@ -34,7 +40,7 @@ class NeonCaroGUI:
         self.ai_thinking = False
         self.game_started = False
 
-        self.board_size = 9
+        self.board_size = BOARD_SIZE
         self.cell_size = int(50 * self.scale)
         self.padding = int(10 * self.scale)
 
@@ -43,8 +49,9 @@ class NeonCaroGUI:
         self.neon_green = "#00ff88"
         self.neon_yellow = "#ffff00"
         self.neon_purple = "#bf00ff"
+
         self.bg_color = "#0a0a1a"
-        self.board_bg = "#1a1a2e"
+        self.board_bg = "#ffffff"
 
         from source.ai_agent import CaroAI
         self.ai = CaroAI(depth=3)
@@ -59,6 +66,7 @@ class NeonCaroGUI:
 
         menu_frame = tk.Frame(self.root, bg=self.bg_color)
         menu_frame.pack(fill=tk.BOTH, expand=True)
+
         title = tk.Label(
             menu_frame,
             text="CARO",
@@ -81,8 +89,7 @@ class NeonCaroGUI:
         button_frame.pack(pady=int(5 * self.scale))
 
         self.level_var = tk.StringVar(value="easy")
-        
-        # Thu nhỏ chiều cao nút một chút nếu màn hình quá bé
+
         btn_height = 2 if self.scale > 0.8 else 1
 
         easy_btn = tk.Radiobutton(
@@ -180,7 +187,7 @@ class NeonCaroGUI:
 
         info = tk.Label(
             menu_frame,
-            text="Bạn: X (Đỏ) | AI: O (Xanh) | Thắng: 4 quân liên tiếp",
+            text="Bạn: X (Đen) | AI: O (Đỏ) | Thắng: 4 quân liên tiếp",
             font=("Arial", int(9 * self.scale)),
             fg="gray",
             bg=self.bg_color
@@ -189,27 +196,34 @@ class NeonCaroGUI:
 
     def start_game(self):
         level = self.level_var.get()
+
         if level == "easy":
             self.ai_depth = 1
             level_text = "Dễ"
             self.ai_algorithm = 'minimax'
+
         elif level == "medium":
             self.ai_depth = 2
             level_text = "Trung Bình"
             self.ai_algorithm = 'minimax'
+
         elif level == "hard":
             self.ai_depth = 3
             level_text = "Khó"
             self.ai_algorithm = 'alphabeta'
+
         else:
             self.ai_depth = 4
             level_text = "Cực khó"
             self.ai_algorithm = 'alphabeta'
 
         self.ai.depth = self.ai_depth
+
         self.game = CaroGame()
+
         self.game_started = True
         self.ai_thinking = False
+
         self.show_game_screen(level_text)
 
     def show_game_screen(self, level_text):
@@ -229,10 +243,21 @@ class NeonCaroGUI:
             highlightthickness=0,
             cursor="hand2"
         )
-        self.canvas.pack(side=tk.LEFT, padx=int(15 * self.scale), pady=int(15 * self.scale))
+
+        self.canvas.pack(
+            side=tk.LEFT,
+            padx=int(15 * self.scale),
+            pady=int(15 * self.scale)
+        )
 
         control_frame = tk.Frame(main_frame, bg=self.bg_color)
-        control_frame.pack(side=tk.LEFT, padx=int(15 * self.scale), pady=int(15 * self.scale), fill=tk.BOTH)
+
+        control_frame.pack(
+            side=tk.LEFT,
+            padx=int(15 * self.scale),
+            pady=int(15 * self.scale),
+            fill=tk.BOTH
+        )
 
         title = tk.Label(
             control_frame,
@@ -252,7 +277,12 @@ class NeonCaroGUI:
         )
         level_label.pack()
 
-        sep = tk.Frame(control_frame, height=2, bg=self.neon_blue, width=int(160 * self.scale))
+        sep = tk.Frame(
+            control_frame,
+            height=2,
+            bg=self.neon_blue,
+            width=int(160 * self.scale)
+        )
         sep.pack(fill=tk.X, pady=10)
 
         player_frame = tk.Frame(control_frame, bg=self.bg_color)
@@ -262,7 +292,7 @@ class NeonCaroGUI:
             player_frame,
             text="BẠN: X",
             font=("Arial", int(13 * self.scale), "bold"),
-            fg=self.neon_blue,
+            fg="#000000",
             bg=self.bg_color
         ).pack()
 
@@ -274,7 +304,12 @@ class NeonCaroGUI:
             bg=self.bg_color
         ).pack()
 
-        sep2 = tk.Frame(control_frame, height=2, bg=self.neon_yellow, width=int(160 * self.scale))
+        sep2 = tk.Frame(
+            control_frame,
+            height=2,
+            bg=self.neon_yellow,
+            width=int(160 * self.scale)
+        )
         sep2.pack(fill=tk.X, pady=10)
 
         self.status_label = tk.Label(
@@ -284,6 +319,7 @@ class NeonCaroGUI:
             fg=self.neon_yellow,
             bg=self.bg_color
         )
+
         self.status_label.pack(pady=10)
 
         self.ai_info = tk.Label(
@@ -294,52 +330,75 @@ class NeonCaroGUI:
             bg=self.bg_color,
             justify=tk.LEFT
         )
+
         self.ai_info.pack(pady=5)
 
-        sep3 = tk.Frame(control_frame, height=2, bg=self.neon_red, width=int(160 * self.scale))
+        sep3 = tk.Frame(
+            control_frame,
+            height=2,
+            bg=self.neon_red,
+            width=int(160 * self.scale)
+        )
         sep3.pack(fill=tk.X, pady=15)
 
         btn_w = int(14 * self.scale) if self.scale > 0.8 else 12
+
         menu_btn = tk.Button(
             control_frame,
             text="MENU",
             command=self.back_to_menu,
-            width=btn_w, height=1 if self.scale < 0.8 else 2,
-            bg="#1a1a2e", fg=self.neon_yellow,
+            width=btn_w,
+            height=1 if self.scale < 0.8 else 2,
+            bg="#1a1a2e",
+            fg=self.neon_yellow,
             activebackground=self.neon_yellow,
             activeforeground=self.bg_color,
             font=("Arial", int(11 * self.scale), "bold"),
-            relief=tk.RAISED, bd=2, cursor="hand2"
+            relief=tk.RAISED,
+            bd=2,
+            cursor="hand2"
         )
+
         menu_btn.pack(pady=3)
 
         restart_btn = tk.Button(
             control_frame,
             text="CHƠI LẠI",
             command=self.restart,
-            width=btn_w, height=1 if self.scale < 0.8 else 2,
-            bg="#1a1a2e", fg=self.neon_blue,
+            width=btn_w,
+            height=1 if self.scale < 0.8 else 2,
+            bg="#1a1a2e",
+            fg=self.neon_blue,
             activebackground=self.neon_blue,
             activeforeground=self.bg_color,
             font=("Arial", int(11 * self.scale), "bold"),
-            relief=tk.RAISED, bd=2, cursor="hand2"
+            relief=tk.RAISED,
+            bd=2,
+            cursor="hand2"
         )
+
         restart_btn.pack(pady=3)
 
         exit_btn = tk.Button(
             control_frame,
             text="THOÁT",
             command=self.root.quit,
-            width=btn_w, height=1 if self.scale < 0.8 else 2,
-            bg="#1a1a2e", fg=self.neon_red,
+            width=btn_w,
+            height=1 if self.scale < 0.8 else 2,
+            bg="#1a1a2e",
+            fg=self.neon_red,
             activebackground=self.neon_red,
             activeforeground=self.bg_color,
             font=("Arial", int(11 * self.scale), "bold"),
-            relief=tk.RAISED, bd=2, cursor="hand2"
+            relief=tk.RAISED,
+            bd=2,
+            cursor="hand2"
         )
+
         exit_btn.pack(pady=3)
 
         self.draw_board()
+
         self.canvas.bind("<Button-1>", self.on_click)
 
     def back_to_menu(self):
@@ -354,57 +413,102 @@ class NeonCaroGUI:
 
         start_x = padding
         start_y = padding
+
         end_x = start_x + size * cell
         end_y = start_y + size * cell
 
         self.canvas.create_rectangle(
-            start_x - 3, start_y - 3,
-            end_x + 3, end_y + 3,
-            outline=self.neon_blue, width=3
+            start_x - 3,
+            start_y - 3,
+            end_x + 3,
+            end_y + 3,
+            outline=self.neon_blue,
+            width=3
         )
 
         for col in range(size + 1):
             x = start_x + col * cell
-            self.canvas.create_line(x, start_y, x, end_y, fill="#445566", width=1)
+
+            self.canvas.create_line(
+                x,
+                start_y,
+                x,
+                end_y,
+                fill="#445566",
+                width=1
+            )
 
         for row in range(size + 1):
             y = start_y + row * cell
-            self.canvas.create_line(start_x, y, end_x, y, fill="#445566", width=1)
 
-        star_points = [(2, 2), (2, 6), (6, 2), (6, 6), (4, 4)]
-        for row, col in star_points:
-            if row < size and col < size:
-                cx = start_x + col * cell + cell // 2
-                cy = start_y + row * cell + cell // 2
-                r_dot = max(2, int(4 * self.scale))
-                self.canvas.create_oval(cx - r_dot, cy - r_dot, cx + r_dot, cy + r_dot, fill=self.neon_yellow, outline="")
+            self.canvas.create_line(
+                start_x,
+                y,
+                end_x,
+                y,
+                fill="#445566",
+                width=1
+            )
 
     def draw_piece(self, row, col, player):
         cx = self.padding + col * self.cell_size + self.cell_size // 2
         cy = self.padding + row * self.cell_size + self.cell_size // 2
-        r = self.cell_size // 2 - 6
-        line_w = max(3, int(5 * self.scale))
+
+        line_w = max(6, int(8 * self.scale))
+
+        r = self.cell_size // 2 - line_w
 
         if player == PLAYER_X:
-            for i in range(3, 0, -1):
-                self.canvas.create_line(cx - r - i, cy - r - i, cx + r + i, cy + r + i, width=line_w + i * 2, fill="#ff6699", capstyle=tk.ROUND)
-                self.canvas.create_line(cx + r + i, cy - r - i, cx - r - i, cy + r + i, width=line_w + i * 2, fill="#ff6699", capstyle=tk.ROUND)
-            self.canvas.create_line(cx - r, cy - r, cx + r, cy + r, width=line_w, fill=self.neon_blue, capstyle=tk.ROUND)
-            self.canvas.create_line(cx + r, cy - r, cx - r, cy + r, width=line_w, fill=self.neon_blue, capstyle=tk.ROUND)
+            self.canvas.create_line(
+                cx - r,
+                cy - r,
+                cx + r,
+                cy + r,
+                width=line_w,
+                fill="#000000",
+                capstyle=tk.ROUND
+            )
+
+            self.canvas.create_line(
+                cx + r,
+                cy - r,
+                cx - r,
+                cy + r,
+                width=line_w,
+                fill="#000000",
+                capstyle=tk.ROUND
+            )
+
         else:
-            for i in range(3, 0, -1):
-                self.canvas.create_oval(cx - r - i, cy - r - i, cx + r + i, cy + r + i, outline="#ff6699", width=max(1, line_w - 2 + i * 2))
-            self.canvas.create_oval(cx - r, cy - r, cx + r, cy + r, outline=self.neon_red, width=line_w)
+            self.canvas.create_oval(
+                cx - r,
+                cy - r,
+                cx + r,
+                cy + r,
+                outline=self.neon_red,
+                width=line_w
+            )
 
     def draw_last_move_indicator(self, row, col):
         cx = self.padding + col * self.cell_size + self.cell_size // 2
         cy = self.padding + row * self.cell_size + self.cell_size // 2
+
         r = self.cell_size // 2 - 8
-        self.canvas.create_oval(cx - r, cy - r, cx + r, cy + r, outline=self.neon_green, width=2, dash=(3, 3))
+
+        self.canvas.create_oval(
+            cx - r,
+            cy - r,
+            cx + r,
+            cy + r,
+            outline=self.neon_green,
+            width=2,
+            dash=(3, 3)
+        )
 
     def on_click(self, event):
         if self.game is None or self.game.game_over or self.ai_thinking:
             return
+
         if self.game.current_player != PLAYER_X:
             return
 
@@ -413,9 +517,12 @@ class NeonCaroGUI:
 
         if 0 <= row < self.board_size and 0 <= col < self.board_size:
             if self.game.is_valid_move(row, col):
+
                 self.game.make_move(row, col)
+
                 self.draw_board()
                 self.draw_all_pieces()
+
                 self.draw_last_move_indicator(row, col)
 
                 if self.game.is_terminal():
@@ -431,48 +538,98 @@ class NeonCaroGUI:
 
     def ai_turn(self):
         self.ai_thinking = True
-        self.status_label.config(text="AI ĐANG TÍNH...", fg=self.neon_blue)
+
+        self.status_label.config(
+            text="AI ĐANG TÍNH...",
+            fg=self.neon_blue
+        )
 
         def ai_move():
-            move, score, nodes, elapsed = self.ai.get_best_move(self.game, self.ai_algorithm)
+            move, score, nodes, elapsed = self.ai.get_best_move(
+                self.game,
+                self.ai_algorithm
+            )
 
             if move:
                 row, col = move
+
                 self.game.make_move(row, col)
+
                 self.draw_board()
                 self.draw_all_pieces()
+
                 self.draw_last_move_indicator(row, col)
-                self.ai_info.config(text=f"AI: ({row},{col})\nScore: {score}\nNodes: {nodes}\nTime: {elapsed:.3f}s")
+
+                self.ai_info.config(
+                    text=f"AI: ({row},{col})\n"
+                         f"Score: {score}\n"
+                         f"Nodes: {nodes}\n"
+                         f"Time: {elapsed:.3f}s"
+                )
 
             if self.game.is_terminal():
                 self.show_result()
             else:
-                self.status_label.config(text="LƯỢT CỦA BẠN", fg=self.neon_yellow)
+                self.status_label.config(
+                    text="LƯỢT CỦA BẠN",
+                    fg=self.neon_yellow
+                )
 
             self.ai_thinking = False
 
         import threading
+
         t = threading.Thread(target=ai_move)
         t.start()
 
     def show_result(self):
         self.game.game_over = True
+
         result = self.game.get_result()
 
         if result == PLAYER_X:
-            self.status_label.config(text="BẠN THẮNG!", fg=self.neon_green)
-            messagebox.showinfo("Kết Quả", "Chúc mừng! Bạn đã thắng!")
+            self.status_label.config(
+                text="BẠN THẮNG!",
+                fg=self.neon_green
+            )
+
+            messagebox.showinfo(
+                "Kết Quả",
+                "Chúc mừng! Bạn đã thắng!"
+            )
+
         elif result == PLAYER_O:
-            self.status_label.config(text="AI THẮNG!", fg=self.neon_red)
-            messagebox.showinfo("Kết Quả", "AI đã thắng! Thật tiếc...")
+            self.status_label.config(
+                text="AI THẮNG!",
+                fg=self.neon_red
+            )
+
+            messagebox.showinfo(
+                "Kết Quả",
+                "AI đã thắng! Thật tiếc..."
+            )
+
         else:
-            self.status_label.config(text="HÒA!", fg=self.neon_yellow)
-            messagebox.showinfo("Kết Quả", "Hòa!")
+            self.status_label.config(
+                text="HÒA!",
+                fg=self.neon_yellow
+            )
+
+            messagebox.showinfo(
+                "Kết Quả",
+                "Hòa!"
+            )
 
     def restart(self):
         self.game = CaroGame()
+
         self.ai_info.config(text="")
-        self.status_label.config(text="LƯỢT CỦA BẠN", fg=self.neon_yellow)
+
+        self.status_label.config(
+            text="LƯỢT CỦA BẠN",
+            fg=self.neon_yellow
+        )
+
         self.draw_board()
 
     def run(self):
@@ -482,7 +639,6 @@ class NeonCaroGUI:
 def main():
     gui = NeonCaroGUI()
     gui.run()
-
 
 if __name__ == "__main__":
     main()
