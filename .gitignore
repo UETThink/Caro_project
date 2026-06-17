@@ -1,0 +1,60 @@
+# Python files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Virtualenv
+python-virtualenv/
+
+# IDE and Editors
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+*.swo
+
+# LaTeX intermediate files (for Section 10-14 Report)
+Report/*.aux
+Report/*.fdb_latexmk
+Report/*.fls
+Report/*.log
+Report/*.out
+Report/*.synctex.gz
+Report/*.toc
+Report/*.xdv
+Report/*.blg
+Report/*.bbl
+
+# Optional: Uncomment if you want to ignore compiled PDFs as well
+# Report/*.pdf

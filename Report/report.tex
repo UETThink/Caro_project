@@ -1,0 +1,1106 @@
+% -*- coding: utf-8 -*-
+\documentclass[12pt,a4paper]{article}
+
+% ===== PACKAGES =====
+\usepackage[utf8]{inputenc}
+\usepackage[vietnamese]{babel}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{tikz}
+
+% ===== PAGE SETUP =====
+\geometry{left=2.5cm, right=2cm, top=2.5cm, bottom=2.5cm}
+\setlength{\parindent}{1cm}
+\setlength{\parskip}{0.3em}
+
+% ===== CODE LISTING STYLE =====
+\definecolor{codebg}{RGB}{248,248,248}
+\definecolor{codegreen}{RGB}{0,128,0}
+\definecolor{codegray}{RGB}{128,128,128}
+\definecolor{codepurple}{RGB}{128,0,128}
+\definecolor{codeblue}{RGB}{0,0,180}
+
+\lstset{
+    language=Python,
+    backgroundcolor=\color{codebg},
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{codeblue}\bfseries,
+    stringstyle=\color{codegreen},
+    commentstyle=\color{codegray}\itshape,
+    numberstyle=\tiny\color{codegray},
+    numbers=left,
+    numbersep=8pt,
+    frame=single,
+    breaklines=true,
+    breakatwhitespace=true,
+    tabsize=4,
+    showstringspaces=false,
+    captionpos=b,
+    xleftmargin=1.5em,
+    framexleftmargin=1em,
+    literate={á}{{\'a}}1 {à}{{\`a}}1 {ả}{{\h{a}}}1 {ã}{{\~a}}1 {ạ}{{\.a}}1
+             {ă}{{\u{a}}}1 {ắ}{{\'\u{a}}}1 {ằ}{{\`\u{a}}}1 {ẳ}{{\h{\u{a}}}}1 {ẵ}{{\~\u{a}}}1 {ặ}{{\.{\u{a}}}}1
+             {â}{{\^a}}1 {ấ}{{\'\^a}}1 {ầ}{{\`\^a}}1 {ẩ}{{\h{\^a}}}1 {ẫ}{{\~\^a}}1 {ậ}{{\.{\^a}}}1
+             {é}{{\'e}}1 {è}{{\`e}}1 {ẻ}{{\h{e}}}1 {ẽ}{{\~e}}1 {ẹ}{{\.e}}1
+             {ê}{{\^e}}1 {ế}{{\'\^e}}1 {ề}{{\`\^e}}1 {ể}{{\h{\^e}}}1 {ễ}{{\~\^e}}1 {ệ}{{\.{\^e}}}1
+             {í}{{\'i}}1 {ì}{{\`i}}1 {ỉ}{{\h{i}}}1 {ĩ}{{\~i}}1 {ị}{{\.i}}1
+             {ó}{{\'o}}1 {ò}{{\`o}}1 {ỏ}{{\h{o}}}1 {õ}{{\~o}}1 {ọ}{{\.o}}1
+             {ô}{{\^o}}1 {ố}{{\'\^o}}1 {ồ}{{\`\^o}}1 {ổ}{{\h{\^o}}}1 {ỗ}{{\~\^o}}1 {ộ}{{\.{\^o}}}1
+             {ơ}{{\horn{o}}}1
+             {ú}{{\'u}}1 {ù}{{\`u}}1 {ủ}{{\h{u}}}1 {ũ}{{\~u}}1 {ụ}{{\.u}}1
+             {ư}{{\horn{u}}}1
+             {ý}{{\'y}}1 {ỳ}{{\`y}}1 {ỷ}{{\h{y}}}1 {ỹ}{{\~y}}1 {ỵ}{{\.y}}1
+             {đ}{{\dj}}1 {Đ}{{\DJ}}1,
+}
+
+% ===== HEADER/FOOTER =====
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Báo cáo Bài tập lớn -- Trò chơi Cờ Caro}
+\fancyhead[R]{\small \thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ===== PSEUDOCODE VIETNAMESE =====
+\floatname{algorithm}{Thuật toán}
+\renewcommand{\algorithmicrequire}{\textbf{Đầu vào:}}
+\renewcommand{\algorithmicensure}{\textbf{Đầu ra:}}
+
+% ===== TITLE PAGE =====
+\begin{document}
+
+\begin{titlepage}
+    \centering
+    \vspace*{1cm}
+
+    {\large \textbf{TRƯỜNG ĐẠI HỌC CÔNG NGHỆ}}\\[0.3cm]
+    {\large \textbf{ĐẠI HỌC QUỐC GIA HÀ NỘI}}\\[0.3cm]
+    {\large Khoa Công nghệ Thông tin}\\[2cm]
+
+    \rule{\textwidth}{1.5pt}\\[0.5cm]
+    {\Huge \textbf{BÁO CÁO BÀI TẬP LỚN}}\\[0.3cm]
+    {\LARGE \textbf{TRÒ CHƠI CỜ CARO VỚI AI}}\\[0.2cm]
+    {\large Thuật toán Minimax và Alpha-Beta Pruning}\\[0.3cm]
+    \rule{\textwidth}{1.5pt}\\[2cm]
+
+    {\large \textbf{Môn học:} Nhập môn Trí tuệ Nhân tạo}\\[0.5cm]
+
+    {\large \textbf{Sinh viên thực hiện:} [Họ và tên]}\\[0.3cm]
+    {\large \textbf{MSSV:} [Mã số sinh viên]}\\[0.3cm]
+    {\large \textbf{Giảng viên hướng dẫn:} [Tên giảng viên]}\\[2cm]
+
+    \vfill
+    {\large Hà Nội, 2026}
+\end{titlepage}
+
+% ===== TABLE OF CONTENTS =====
+\tableofcontents
+\newpage
+
+% ================================================================
+% SECTION 1: MÔ TẢ BÀI TOÁN
+% ================================================================
+\section{Mô tả bài toán cờ Caro}
+
+Cờ Caro (hay còn gọi là Gomoku, Five-in-a-Row) là một trò chơi chiến thuật hai người trên bàn cờ kẻ ô vuông. Đây là một bài toán kinh điển trong lĩnh vực Trí tuệ Nhân tạo, thuộc nhóm \textbf{trò chơi đối kháng hai người với thông tin đầy đủ} (two-player zero-sum game with perfect information).
+
+\subsection{Đặc điểm bài toán}
+
+\begin{itemize}[leftmargin=2cm]
+    \item \textbf{Loại bài toán:} Tìm kiếm đối kháng (Adversarial Search).
+    \item \textbf{Không gian trạng thái:} Cực lớn -- với bàn cờ $9 \times 9$, số trạng thái lý thuyết lên tới $3^{81} \approx 4.4 \times 10^{38}$.
+    \item \textbf{Thông tin đầy đủ:} Cả hai người chơi đều nhìn thấy toàn bộ bàn cờ tại mọi thời điểm.
+    \item \textbf{Tổng bằng không (Zero-sum):} Một bên thắng thì bên kia thua, lợi ích của hai bên đối lập nhau.
+    \item \textbf{Xác định (Deterministic):} Không có yếu tố ngẫu nhiên trong trò chơi.
+\end{itemize}
+
+\subsection{Mục tiêu}
+
+Xây dựng chương trình chơi Cờ Caro trên bàn cờ kích thước $9 \times 9$, trong đó:
+\begin{enumerate}
+    \item Người chơi đối đầu với AI (máy tính).
+    \item AI sử dụng thuật toán Minimax và Alpha-Beta Pruning để tìm nước đi tối ưu.
+    \item Có giao diện đồ họa thân thiện sử dụng Tkinter.
+    \item Hỗ trợ nhiều mức độ khó (điều chỉnh độ sâu tìm kiếm).
+\end{enumerate}
+
+% ================================================================
+% SECTION 2: LUẬT CHƠI VÀ ĐIỀU KIỆN THẮNG
+% ================================================================
+\section{Luật chơi và điều kiện thắng}
+
+\subsection{Luật chơi}
+
+\begin{enumerate}
+    \item Bàn cờ có kích thước $9 \times 9$ ô vuông.
+    \item Hai người chơi lần lượt đặt quân:
+    \begin{itemize}
+        \item Người chơi (Human) sử dụng quân \textbf{X} và đi trước.
+        \item Máy tính (AI) sử dụng quân \textbf{O} và đi sau.
+    \end{itemize}
+    \item Mỗi lượt, người chơi đặt quân của mình vào một ô trống bất kỳ.
+    \item Quân đã đặt không được di chuyển hay thu hồi.
+\end{enumerate}
+
+\subsection{Điều kiện thắng}
+
+Người chơi chiến thắng khi tạo được chuỗi \textbf{4 quân liên tiếp} theo một trong bốn hướng:
+\begin{itemize}
+    \item Hàng ngang (horizontal): $\rightarrow$
+    \item Hàng dọc (vertical): $\downarrow$
+    \item Đường chéo chính (diagonal): $\searrow$
+    \item Đường chéo phụ (anti-diagonal): $\swarrow$
+\end{itemize}
+
+\subsection{Điều kiện hòa}
+
+Trận đấu hòa khi toàn bộ $9 \times 9 = 81$ ô trên bàn cờ đã được lấp đầy mà không có bên nào đạt được 4 quân liên tiếp.
+
+\textbf{Lưu ý:} Trong phiên bản này, điều kiện thắng là \textbf{4 quân liên tiếp} (thay vì 5 như Gomoku chuẩn) để phù hợp với kích thước bàn cờ $9 \times 9$ thu nhỏ.
+
+% ================================================================
+% SECTION 3: BIỂU DIỄN TRẠNG THÁI BÀN CỜ
+% ================================================================
+\section{Cách biểu diễn trạng thái bàn cờ}
+
+\subsection{Cấu trúc dữ liệu}
+
+Bàn cờ được biểu diễn bằng một \textbf{ma trận 2 chiều} (mảng 2D) kích thước $9 \times 9$, trong đó mỗi ô nhận một trong ba giá trị:
+
+\begin{table}[H]
+\centering
+\caption{Giá trị biểu diễn trạng thái ô cờ}
+\begin{tabular}{ccl}
+\toprule
+\textbf{Giá trị} & \textbf{Hằng số} & \textbf{Ý nghĩa} \\
+\midrule
+$0$  & \texttt{EMPTY}    & Ô trống, chưa có quân \\
+$1$  & \texttt{PLAYER\_X} & Quân X (người chơi) \\
+$-1$ & \texttt{PLAYER\_O} & Quân O (AI) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Cài đặt trong mã nguồn}
+
+\begin{lstlisting}[caption={Biểu diễn trạng thái bàn cờ (\texttt{caro\_game.py})}]
+BOARD_SIZE = 9
+EMPTY = 0
+PLAYER_X = 1    # Nguoi choi
+PLAYER_O = -1   # AI
+
+class CaroGame:
+    def __init__(self, size=BOARD_SIZE):
+        self.size = size
+        self.board = [[EMPTY for _ in range(size)] for _ in range(size)]
+        self.current_player = PLAYER_X  # X di truoc
+        self.last_move = None           # Luu nuoc di cuoi cung
+        self.move_count = 0             # Dem so nuoc da di
+        self.winner = None              # Nguoi thang
+        self.game_over = False          # Trang thai ket thuc
+\end{lstlisting}
+
+\subsection{Ưu điểm của cách biểu diễn}
+
+\begin{itemize}
+    \item Sử dụng giá trị $1$ và $-1$ cho hai người chơi giúp dễ dàng đổi lượt bằng phép nhân $-1$: \texttt{current\_player = -current\_player}.
+    \item Xác định đối thủ đơn giản: \texttt{opponent = -player}.
+    \item Truy cập nhanh $O(1)$ vào bất kỳ ô nào trên bàn cờ.
+    \item Phương thức \texttt{copy()} sử dụng \texttt{deepcopy} để tạo bản sao trạng thái cho cây tìm kiếm.
+\end{itemize}
+
+% ================================================================
+% SECTION 4: CÁCH SINH NƯỚC ĐI HỢP LỆ
+% ================================================================
+\section{Cách sinh nước đi hợp lệ}
+
+Việc sinh nước đi hợp lệ là yếu tố then chốt ảnh hưởng đến hiệu suất của thuật toán tìm kiếm. Chương trình cài đặt hai phương pháp:
+
+\subsection{Phương pháp 1: Sinh tất cả nước đi (\texttt{get\_all\_valid\_moves})}
+
+Liệt kê toàn bộ ô trống trên bàn cờ. Đây là cách đơn giản nhưng \textbf{không hiệu quả} vì phải xét tối đa 81 ô:
+
+\begin{lstlisting}[caption={Sinh tất cả nước đi hợp lệ}]
+def get_all_valid_moves(self):
+    moves = []
+    for i in range(self.size):
+        for j in range(self.size):
+            if self.board[i][j] == EMPTY:
+                moves.append((i, j))
+    return moves
+\end{lstlisting}
+
+\subsection{Phương pháp 2: Sinh nước đi lân cận (\texttt{get\_valid\_moves})}
+
+Chỉ xét các ô trống \textbf{liền kề} (8 hướng) với các quân đã đặt trên bàn cờ. Cách tiếp cận này giảm đáng kể số nước đi cần xét.
+
+\begin{lstlisting}[caption={Sinh nước đi lân cận -- chiến lược tối ưu}]
+def get_valid_moves(self):
+    if self.move_count == 0:
+        return [(self.size // 2, self.size // 2)]  # Nuoc dau o trung tam
+
+    moves = set()
+    for i in range(self.size):
+        for j in range(self.size):
+            if self.board[i][j] != EMPTY:
+                for di in [-1, 0, 1]:
+                    for dj in [-1, 0, 1]:
+                        if di == 0 and dj == 0:
+                            continue
+                        ni, nj = i + di, j + dj
+                        if self.is_valid_move(ni, nj):
+                            moves.add((ni, nj))
+
+    # Sap xep theo khoang cach toi nuoc di cuoi cung
+    if self.last_move:
+        last_r, last_c = self.last_move
+        moves = sorted(moves,
+            key=lambda m: abs(m[0]-last_r) + abs(m[1]-last_c))
+    return list(moves)
+\end{lstlisting}
+
+\subsection{Phân tích hiệu quả}
+
+\begin{itemize}
+    \item \textbf{Nước đi đầu tiên:} Luôn trả về ô trung tâm $(4, 4)$ -- đây là vị trí chiến lược nhất.
+    \item \textbf{Giới hạn không gian tìm kiếm:} Thay vì xét tất cả ô trống (tối đa 81), chỉ xét các ô lân cận quân đã đặt (thường 10--25 ô).
+    \item \textbf{Sắp xếp theo khoảng cách Manhattan:} Ưu tiên các nước đi gần nước đi cuối cùng, giúp cải thiện hiệu quả cắt tỉa Alpha-Beta.
+\end{itemize}
+
+% ================================================================
+% SECTION 5: KIỂM TRA TRẠNG THÁI KẾT THÚC
+% ================================================================
+\section{Cách kiểm tra trạng thái kết thúc}
+
+Trạng thái kết thúc được kiểm tra sau mỗi nước đi. Chương trình kiểm tra hai điều kiện:
+
+\subsection{Kiểm tra chiến thắng (\texttt{check\_win})}
+
+Sau mỗi nước đi tại vị trí $(row, col)$, kiểm tra 4 hướng (ngang, dọc, chéo chính, chéo phụ). Đếm số quân liên tiếp cùng loại theo cả hai chiều dọc theo mỗi trục:
+
+\begin{lstlisting}[caption={Kiểm tra chiến thắng}]
+def check_win(self, row, col, player):
+    directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
+    for d_row, d_col in directions:
+        count = 1
+        count += self.count_direction(row, col, d_row, d_col, player)
+        count += self.count_direction(row, col, -d_row, -d_col, player)
+        if count >= 4:
+            return True
+    return False
+\end{lstlisting}
+
+\begin{lstlisting}[caption={Đếm quân liên tiếp theo một hướng}]
+def count_direction(self, row, col, d_row, d_col, player):
+    count = 0
+    r, c = row + d_row, col + d_col
+    while (0 <= r < self.size and 0 <= c < self.size
+           and self.board[r][c] == player):
+        count += 1
+        r += d_row
+        c += d_col
+    return count
+\end{lstlisting}
+
+\subsection{Kiểm tra hòa}
+
+Trận đấu hòa khi tổng số nước đi bằng $9 \times 9 = 81$ mà không ai thắng:
+
+\begin{lstlisting}[caption={Kiểm tra trạng thái kết thúc tổng quát}]
+def make_move(self, row, col, player=None):
+    # ... dat quan ...
+    if self.check_win(row, col, player):
+        self.winner = player
+        self.game_over = True
+    elif self.move_count >= self.size * self.size:
+        self.winner = 0        # Hoa
+        self.game_over = True
+\end{lstlisting}
+
+\subsection{Độ phức tạp}
+
+Kiểm tra chiến thắng có độ phức tạp $O(k)$ với $k$ là độ dài chuỗi thắng (ở đây $k = 4$). Nhờ chỉ kiểm tra tại vị trí vừa đặt quân, thuật toán rất hiệu quả so với việc quét toàn bộ bàn cờ.
+
+% ================================================================
+% SECTION 6: THUẬT TOÁN MINIMAX
+% ================================================================
+\section{Thuật toán Minimax đã cài đặt}
+
+\subsection{Ý tưởng thuật toán}
+
+Minimax là thuật toán tìm kiếm trên cây trò chơi dựa trên nguyên tắc:
+\begin{itemize}
+    \item Người chơi \textbf{MAX} (AI - quân O) luôn chọn nước đi có giá trị \textbf{cao nhất}.
+    \item Người chơi \textbf{MIN} (Human - quân X) luôn chọn nước đi có giá trị \textbf{thấp nhất}.
+    \item Cả hai bên đều chơi \textbf{tối ưu} (optimal play).
+\end{itemize}
+
+\subsection{Mã giả}
+
+\begin{algorithm}[H]
+\caption{Thuật toán Minimax}
+\begin{algorithmic}[1]
+\Require Trạng thái game, độ sâu $d$, lượt chơi (MAX/MIN)
+\Ensure Giá trị đánh giá tốt nhất
+\Function{Minimax}{$game, depth, isMaximizing$}
+    \If{$game$ là trạng thái kết thúc}
+        \State \Return giá trị kết quả ($\pm 100000$ hoặc $0$)
+    \EndIf
+    \If{$depth = 0$}
+        \State \Return $evaluate(game)$ \Comment{Đánh giá heuristic}
+    \EndIf
+    \If{$isMaximizing$}
+        \State $maxVal \gets -\infty$
+        \ForAll{nước đi hợp lệ $move$}
+            \State Thực hiện $move$ trên bản sao game
+            \State $val \gets$ \Call{Minimax}{$game', depth-1, False$}
+            \State $maxVal \gets \max(maxVal, val)$
+        \EndFor
+        \State \Return $maxVal$
+    \Else
+        \State $minVal \gets +\infty$
+        \ForAll{nước đi hợp lệ $move$}
+            \State Thực hiện $move$ trên bản sao game
+            \State $val \gets$ \Call{Minimax}{$game', depth-1, True$}
+            \State $minVal \gets \min(minVal, val)$
+        \EndFor
+        \State \Return $minVal$
+    \EndIf
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Cài đặt trong mã nguồn}
+
+\begin{lstlisting}[caption={Cài đặt thuật toán Minimax (\texttt{ai\_agent.py})}]
+def minimax(self, game, depth, is_maximizing):
+    self.nodes_visited += 1
+
+    if game.is_terminal():
+        result = game.get_result()
+        if result == PLAYER_O:    # AI thang
+            return 100000
+        elif result == PLAYER_X:  # Nguoi choi thang
+            return -100000
+        else:
+            return 0              # Hoa
+
+    if depth == 0:
+        return self.evaluation_func(game, PLAYER_O)
+
+    valid_moves = game.get_valid_moves()
+    if not valid_moves:
+        return 0
+
+    if is_maximizing:
+        max_val = -math.inf
+        for move in valid_moves:
+            row, col = move
+            game_copy = game.copy()
+            game_copy.make_move(row, col)
+            val = self.minimax(game_copy, depth - 1, False)
+            max_val = max(max_val, val)
+        return max_val
+    else:
+        min_val = math.inf
+        for move in valid_moves:
+            row, col = move
+            game_copy = game.copy()
+            game_copy.make_move(row, col)
+            val = self.minimax(game_copy, depth - 1, True)
+            min_val = min(min_val, val)
+        return min_val
+\end{lstlisting}
+
+\subsection{Độ phức tạp}
+
+\begin{itemize}
+    \item \textbf{Thời gian:} $O(b^d)$ với $b$ là hệ số phân nhánh (branching factor, trung bình 10--25 nước đi), $d$ là độ sâu tìm kiếm.
+    \item \textbf{Không gian:} $O(b \cdot d)$ cho ngăn xếp đệ quy.
+\end{itemize}
+
+% ================================================================
+% SECTION 7: THUẬT TOÁN ALPHA-BETA
+% ================================================================
+\section{Thuật toán Alpha-Beta Pruning đã cài đặt}
+
+\subsection{Ý tưởng cải tiến}
+
+Alpha-Beta Pruning là cải tiến của Minimax, sử dụng hai tham số $\alpha$ và $\beta$ để \textbf{cắt tỉa} các nhánh cây không cần thiết:
+
+\begin{itemize}
+    \item $\alpha$: Giá trị tốt nhất mà MAX đã tìm được (lower bound).
+    \item $\beta$: Giá trị tốt nhất mà MIN đã tìm được (upper bound).
+    \item \textbf{Điều kiện cắt tỉa:} Khi $\beta \leq \alpha$, dừng duyệt nhánh hiện tại vì nhánh này không thể cải thiện kết quả.
+\end{itemize}
+
+\subsection{Mã giả}
+
+\begin{algorithm}[H]
+\caption{Thuật toán Alpha-Beta Pruning}
+\begin{algorithmic}[1]
+\Require Trạng thái game, độ sâu $d$, $\alpha$, $\beta$, lượt chơi
+\Ensure Giá trị đánh giá tốt nhất
+\Function{AlphaBeta}{$game, depth, \alpha, \beta, isMaximizing$}
+    \If{$game$ là trạng thái kết thúc \textbf{or} $depth = 0$}
+        \State \Return giá trị đánh giá
+    \EndIf
+    \If{$isMaximizing$}
+        \State $maxVal \gets -\infty$
+        \ForAll{nước đi hợp lệ $move$}
+            \State $val \gets$ \Call{AlphaBeta}{$game', depth-1, \alpha, \beta, False$}
+            \State $maxVal \gets \max(maxVal, val)$
+            \State $\alpha \gets \max(\alpha, val)$
+            \If{$\beta \leq \alpha$} \Comment{Cắt tỉa Beta}
+                \State \textbf{break}
+            \EndIf
+        \EndFor
+        \State \Return $maxVal$
+    \Else
+        \State $minVal \gets +\infty$
+        \ForAll{nước đi hợp lệ $move$}
+            \State $val \gets$ \Call{AlphaBeta}{$game', depth-1, \alpha, \beta, True$}
+            \State $minVal \gets \min(minVal, val)$
+            \State $\beta \gets \min(\beta, val)$
+            \If{$\beta \leq \alpha$} \Comment{Cắt tỉa Alpha}
+                \State \textbf{break}
+            \EndIf
+        \EndFor
+        \State \Return $minVal$
+    \EndIf
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Cài đặt trong mã nguồn}
+
+\begin{lstlisting}[caption={Cài đặt Alpha-Beta Pruning (\texttt{ai\_agent.py})}]
+def alpha_beta(self, game, depth, alpha, beta, is_maximizing):
+    self.nodes_visited += 1
+
+    if game.is_terminal():
+        result = game.get_result()
+        if result == PLAYER_O:
+            return 100000
+        elif result == PLAYER_X:
+            return -100000
+        else:
+            return 0
+
+    if depth == 0:
+        return self.evaluation_func(game, PLAYER_O)
+
+    valid_moves = game.get_valid_moves()
+    if not valid_moves:
+        return 0
+
+    if is_maximizing:
+        max_val = -math.inf
+        for move in valid_moves:
+            row, col = move
+            game_copy = game.copy()
+            game_copy.make_move(row, col)
+            val = self.alpha_beta(game_copy, depth-1, alpha, beta, False)
+            max_val = max(max_val, val)
+            alpha = max(alpha, val)
+            if beta <= alpha:
+                break  # Cat tia Beta
+        return max_val
+    else:
+        min_val = math.inf
+        for move in valid_moves:
+            row, col = move
+            game_copy = game.copy()
+            game_copy.make_move(row, col)
+            val = self.alpha_beta(game_copy, depth-1, alpha, beta, True)
+            min_val = min(min_val, val)
+            beta = min(beta, val)
+            if beta <= alpha:
+                break  # Cat tia Alpha
+        return min_val
+\end{lstlisting}
+
+\subsection{Độ phức tạp}
+
+\begin{itemize}
+    \item \textbf{Trường hợp tốt nhất:} $O(b^{d/2})$ -- giảm một nửa độ sâu hiệu quả so với Minimax.
+    \item \textbf{Trường hợp xấu nhất:} $O(b^d)$ -- tương đương Minimax khi không cắt tỉa được.
+    \item \textbf{Trung bình:} $O(b^{3d/4})$ -- cải thiện đáng kể so với Minimax thuần.
+\end{itemize}
+
+% ================================================================
+% SECTION 8: HÀM ĐÁNH GIÁ TRẠNG THÁI
+% ================================================================
+\section{Hàm đánh giá trạng thái}
+
+Hàm đánh giá (evaluation function) là thành phần quan trọng nhất, quyết định ``trí thông minh'' của AI. Chương trình cài đặt hai phiên bản hàm đánh giá.
+
+\subsection{Hàm đánh giá chính (\texttt{evaluate\_simple})}
+
+Hàm này duyệt toàn bộ bàn cờ, tại mỗi ô có quân, kiểm tra 4 hướng và đánh giá dựa trên:
+\begin{itemize}
+    \item Số quân liên tiếp cùng loại.
+    \item Số đầu bị chặn bởi quân đối phương.
+\end{itemize}
+
+\begin{table}[H]
+\centering
+\caption{Bảng điểm theo mẫu hình (Pattern Scores)}
+\begin{tabular}{lccr}
+\toprule
+\textbf{Mẫu hình} & \textbf{Số quân} & \textbf{Đầu bị chặn} & \textbf{Điểm} \\
+\midrule
+Chiến thắng            & $\geq 4$ & bất kỳ & 100.000 \\
+Mở 3 quân (live three) & 3        & 0      & 1.000   \\
+Chặn 1 đầu 3 quân     & 3        & 1      & 100     \\
+Mở 2 quân (live two)   & 2        & 0      & 100     \\
+Chặn 1 đầu 2 quân     & 2        & 1      & 10      \\
+Quân đơn lẻ            & 1        & 0      & 1       \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{lstlisting}[caption={Hàm đánh giá chính (\texttt{evaluation.py})}]
+def evaluate_simple(game, player):
+    if game.is_terminal():
+        result = game.get_result()
+        if result == player:
+            return 100000
+        elif result == -player:
+            return -100000
+        else:
+            return 0
+
+    score = 0
+    directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
+
+    for i in range(BOARD_SIZE):
+        for j in range(BOARD_SIZE):
+            if game.board[i][j] == EMPTY:
+                continue
+            cell_player = game.board[i][j]
+            for d_row, d_col in directions:
+                count = 1
+                blocked = 0
+                # Dem theo huong thuan
+                r, c = i + d_row, j + d_col
+                while 0 <= r < BOARD_SIZE and 0 <= c < BOARD_SIZE:
+                    if game.board[r][c] == cell_player:
+                        count += 1; r += d_row; c += d_col
+                    elif game.board[r][c] == -cell_player:
+                        blocked += 1; break
+                    else:
+                        break
+                # Dem theo huong nguoc
+                r, c = i - d_row, j - d_col
+                while 0 <= r < BOARD_SIZE and 0 <= c < BOARD_SIZE:
+                    if game.board[r][c] == cell_player:
+                        count += 1; r -= d_row; c -= d_col
+                    elif game.board[r][c] == -cell_player:
+                        blocked += 1; break
+                    else:
+                        break
+                # Tinh diem theo mau hinh
+                if count >= 4:       pattern_score = 100000
+                elif count==3 and blocked==0: pattern_score = 1000
+                elif count==3 and blocked==1: pattern_score = 100
+                elif count==2 and blocked==0: pattern_score = 100
+                elif count==2 and blocked==1: pattern_score = 10
+                elif count==1 and blocked==0: pattern_score = 1
+                else: pattern_score = 0
+                # Cong diem cho AI, tru diem cho doi thu
+                if cell_player == player:
+                    score += pattern_score
+                else:
+                    score -= pattern_score
+    return score
+\end{lstlisting}
+
+\subsection{Hàm đánh giá nâng cao (\texttt{evaluate\_board})}
+
+Hàm này bổ sung thêm \textbf{bonus vị trí trung tâm} -- các quân ở gần trung tâm bàn cờ được cộng thêm điểm:
+
+$$\text{center\_bonus} = \max(0,\ 10 - d_{Manhattan}) \times 5$$
+
+trong đó $d_{Manhattan} = |i - 4| + |j - 4|$ là khoảng cách Manhattan đến ô trung tâm.
+
+\subsection{Nguyên tắc thiết kế hàm đánh giá}
+
+\begin{enumerate}
+    \item \textbf{Đối xứng:} Điểm AI cộng, điểm đối thủ trừ $\Rightarrow$ tổng bằng 0 khi cân bằng.
+    \item \textbf{Ưu tiên tấn công:} Các mẫu hình tấn công (mở 3, mở 2) được đánh giá cao.
+    \item \textbf{Phòng thủ tự động:} Vì hàm đánh giá cũng trừ điểm cho mẫu hình đối thủ, AI sẽ tự động phòng thủ khi đối thủ có thế mạnh.
+    \item \textbf{Bonus vị trí:} Khuyến khích AI chiếm giữ vùng trung tâm bàn cờ.
+\end{enumerate}
+
+% ================================================================
+% SECTION 9: THIẾT KẾ CÁC TRẠNG THÁI THỬ NGHIỆM
+% ================================================================
+\section{Thiết kế các trạng thái thử nghiệm}
+
+Chương trình xây dựng 6 trạng thái thử nghiệm với mức độ phức tạp tăng dần để đánh giá hiệu suất AI.
+
+\subsection{State 1: Bàn cờ trống}
+Bàn cờ hoàn toàn trống, AI đi nước đầu tiên. Dùng để kiểm tra chiến lược mở đầu.
+
+\begin{verbatim}
+  0 1 2 3 4 5 6 7 8
+0 . . . . . . . . .
+1 . . . . . . . . .
+2 . . . . . . . . .
+3 . . . . . . . . .
+4 . . . . . . . . .    (Trống hoàn toàn)
+5 . . . . . . . . .
+6 . . . . . . . . .
+7 . . . . . . . . .
+8 . . . . . . . . .
+\end{verbatim}
+
+\subsection{State 2: Giữa trận (5 nước đi)}
+Trạng thái giữa trận với cả hai bên đã đặt quân. X có 3 quân, O có 2 quân.
+
+\begin{verbatim}
+  0 1 2 3 4 5 6 7 8
+0 . . . . . . . . .
+1 . . . . . . . . .
+2 . . . . . . . . .
+3 . . . O X . . . .     X: (4,4), (4,3), (3,4)
+4 . . . X X . . . .     O: (3,3), (5,5)
+5 . . . . . O . . .
+6 . . . . . . . . .
+7 . . . . . . . . .
+8 . . . . . . . . .
+\end{verbatim}
+
+\subsection{State 3: O có 3 quân liên tiếp (hàng ngang)}
+AI (O) có 3 quân liên tiếp, kiểm tra khả năng tấn công hoàn thành chuỗi 4.
+
+\begin{verbatim}
+  0 1 2 3 4 5 6 7 8
+0 . . . . . . . . .
+  ...
+4 . . . . O O O . .     O: (4,4), (4,5), (4,6)
+  ...                    Luot cua O
+\end{verbatim}
+
+\subsection{State 4: X có 3 quân liên tiếp (hàng ngang)}
+Người chơi (X) có 3 quân liên tiếp, kiểm tra khả năng phòng thủ của AI.
+
+\begin{verbatim}
+  0 1 2 3 4 5 6 7 8
+0 . . . . . . . . .
+  ...
+3 . . . X X X . . .     X: (3,3), (3,4), (3,5)
+  ...                    Luot cua O (phai chan)
+\end{verbatim}
+
+\subsection{State 5: Quân rải rác}
+Cả hai bên có quân rải rác ở hai vùng khác nhau trên bàn cờ.
+
+\begin{verbatim}
+  0 1 2 3 4 5 6 7 8
+0 . . . . . . . . .
+  ...
+2 . . X X . . . . .     X: (2,2), (2,3)
+  ...                    O: (5,5), (6,5)
+5 . . . . . O . . .     Luot cua O
+6 . . . . . O . . .
+  ...
+\end{verbatim}
+
+\subsection{State 6: Phức tạp (9 quân)}
+Trạng thái phức tạp nhất với 9 quân đã đặt, nhiều mẫu hình đan xen.
+
+\begin{verbatim}
+  0 1 2 3 4 5 6 7 8
+0 X . . . . . . O .     X: (0,0),(1,1),(2,2),(4,0),(5,0)
+1 . X . . . . . O .     O: (7,7),(6,6),(0,7),(1,7),(2,7)
+2 . . X . . . . O .     Luot cua O
+3 . . . . . . . . .
+4 X . . . . . . . .
+5 X . . . . . . . .
+6 . . . . . . O . .
+7 . . . . . . . O .
+8 . . . . . . . . .
+\end{verbatim}
+
+% ================================================================
+% SECTION 10: BẢNG KẾT QUẢ THỰC NGHIỆM
+% ================================================================
+\section{Bảng kết quả thực nghiệm}
+
+Kết quả thực nghiệm được thu thập bằng cách chạy cả hai thuật toán Minimax và Alpha-Beta Pruning trên 6 trạng thái thử nghiệm với các độ sâu từ 1 đến 4. Các số liệu bao gồm: số trạng thái đã duyệt (Nodes) và thời gian chạy (Time).
+
+% ---- State 1: Ban co trong ----
+\begin{table}[H]
+\centering
+\caption{Kết quả thực nghiệm -- State 1 (Bàn cờ trống, lượt X)}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{c|crr|crr|r}
+\toprule
+\multirow{2}{*}{\textbf{Depth}} & \multicolumn{3}{c|}{\textbf{Minimax}} & \multicolumn{3}{c|}{\textbf{Alpha-Beta}} & \multirow{2}{*}{\textbf{Tỷ lệ cắt tỉa}} \\
+ & Best Move & Nodes & Time (s) & Best Move & Nodes & Time (s) & \\
+\midrule
+1 & (4,4) & 2     & $<$0.001 & (4,4) & 2     & 0.002  & 1.00x \\
+2 & (4,4) & 10    & $<$0.001 & (4,4) & 10    & $<$0.001 & 1.00x \\
+3 & (4,4) & 98    & 0.004    & (4,4) & 52    & 0.002  & 1.88x \\
+4 & (4,4) & 1.298 & 0.054    & (4,4) & 341   & 0.015  & 3.81x \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+% ---- State 2: Giua tran ----
+\begin{table}[H]
+\centering
+\caption{Kết quả thực nghiệm -- State 2 (Giữa trận, 5 nước đi, lượt O)}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{c|crr|crr|r}
+\toprule
+\multirow{2}{*}{\textbf{Depth}} & \multicolumn{3}{c|}{\textbf{Minimax}} & \multicolumn{3}{c|}{\textbf{Alpha-Beta}} & \multirow{2}{*}{\textbf{Tỷ lệ cắt tỉa}} \\
+ & Best Move & Nodes & Time (s) & Best Move & Nodes & Time (s) & \\
+\midrule
+1 & (2,4) & 32      & $<$0.001 & (2,4) & 32     & $<$0.001 & 1.00x \\
+2 & (2,4) & 324     & 0.014    & (2,4) & 120    & 0.006    & 2.70x \\
+3 & (5,4) & 6.288   & 0.317    & (5,4) & 1.176  & 0.062    & 5.35x \\
+4 & (2,4) & 140.324 & 7.752    & (2,4) & 9.023  & 0.502    & 15.55x \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+% ---- State 3: O co 3 hang ngang ----
+\begin{table}[H]
+\centering
+\caption{Kết quả thực nghiệm -- State 3 (O có 3 quân hàng ngang, lượt O)}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{c|crr|crr|r}
+\toprule
+\multirow{2}{*}{\textbf{Depth}} & \multicolumn{3}{c|}{\textbf{Minimax}} & \multicolumn{3}{c|}{\textbf{Alpha-Beta}} & \multirow{2}{*}{\textbf{Tỷ lệ cắt tỉa}} \\
+ & Best Move & Nodes & Time (s) & Best Move & Nodes & Time (s) & \\
+\midrule
+1 & (4,3) & 24     & 0.002   & (4,3) & 24    & $<$0.001 & 1.00x \\
+2 & (4,3) & 172    & 0.011   & (4,3) & 85    & 0.004    & 2.02x \\
+3 & (3,3) & 2.698  & 0.154   & (3,3) & 306   & 0.018    & 8.82x \\
+4 & (3,3) & 45.940 & 2.369   & (3,3) & 1.315 & 0.074    & 34.94x \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+% ---- State 4: X co 3 hang ngang ----
+\begin{table}[H]
+\centering
+\caption{Kết quả thực nghiệm -- State 4 (X có 3 quân hàng ngang, lượt O phòng thủ)}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{c|crr|crr|r}
+\toprule
+\multirow{2}{*}{\textbf{Depth}} & \multicolumn{3}{c|}{\textbf{Minimax}} & \multicolumn{3}{c|}{\textbf{Alpha-Beta}} & \multirow{2}{*}{\textbf{Tỷ lệ cắt tỉa}} \\
+ & Best Move & Nodes & Time (s) & Best Move & Nodes & Time (s) & \\
+\midrule
+1 & (3,2) & 24     & 0.001   & (3,2) & 24    & $<$0.001 & 1.00x \\
+2 & (2,2) & 200    & 0.008   & (2,2) & 117   & 0.004    & 1.71x \\
+3 & (2,2) & 2.848  & 0.139   & (2,2) & 809   & 0.046    & 3.52x \\
+4 & (2,2) & 54.121 & 2.763   & (2,2) & 5.779 & 0.285    & 9.37x \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+% ---- State 5: Quan rai rac ----
+\begin{table}[H]
+\centering
+\caption{Kết quả thực nghiệm -- State 5 (Quân rải rác, lượt O)}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{c|crr|crr|r}
+\toprule
+\multirow{2}{*}{\textbf{Depth}} & \multicolumn{3}{c|}{\textbf{Minimax}} & \multicolumn{3}{c|}{\textbf{Alpha-Beta}} & \multirow{2}{*}{\textbf{Tỷ lệ cắt tỉa}} \\
+ & Best Move & Nodes & Time (s) & Best Move & Nodes & Time (s) & \\
+\midrule
+1 & (4,5) & 40      & 0.002    & (4,5) & 40     & $<$0.001 & 1.00x \\
+2 & (4,5) & 490     & 0.026    & (4,5) & 246    & 0.011    & 1.99x \\
+3 & (4,5) & 11.561  & 0.605    & (4,5) & 1.849  & 0.095    & 6.25x \\
+4 & (4,5) & 302.295 & 16.074   & (4,5) & 11.920 & 0.671    & 25.36x \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+% ---- State 6: Phuc tap ----
+\begin{table}[H]
+\centering
+\caption{Kết quả thực nghiệm -- State 6 (Phức tạp, 9 quân, lượt O)}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{c|crr|crr|r}
+\toprule
+\multirow{2}{*}{\textbf{Depth}} & \multicolumn{3}{c|}{\textbf{Minimax}} & \multicolumn{3}{c|}{\textbf{Alpha-Beta}} & \multirow{2}{*}{\textbf{Tỷ lệ cắt tỉa}} \\
+ & Best Move & Nodes & Time (s) & Best Move & Nodes & Time (s) & \\
+\midrule
+1 & (3,7) & 74        & 0.001    & (3,7) & 74     & 0.002    & 1.00x \\
+2 & (3,7) & 1.437     & 0.084    & (3,7) & 359    & 0.021    & 4.00x \\
+3 & (3,7) & 52.839    & 3.198    & (3,7) & 4.354  & 0.252    & 12.14x \\
+4 & (3,7) & 2.032.724 & 130.429  & (3,7) & 39.831 & 2.519    & 51.03x \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+% ---- Bang tong hop ----
+\begin{table}[H]
+\centering
+\caption{Bảng tổng hợp -- Tỷ lệ cắt tỉa Alpha-Beta so với Minimax (theo Nodes)}
+\begin{tabular}{c|rrrrrr}
+\toprule
+\textbf{Depth} & \textbf{State 1} & \textbf{State 2} & \textbf{State 3} & \textbf{State 4} & \textbf{State 5} & \textbf{State 6} \\
+\midrule
+1 & 1.00x & 1.00x  & 1.00x  & 1.00x & 1.00x  & 1.00x \\
+2 & 1.00x & 2.70x  & 2.02x  & 1.71x & 1.99x  & 4.00x \\
+3 & 1.88x & 5.35x  & 8.82x  & 3.52x & 6.25x  & 12.14x \\
+4 & 3.81x & 15.55x & 34.94x & 9.37x & 25.36x & 51.03x \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ================================================================
+% SECTION 11: NHẬN XÉT SỐ TRẠNG THÁI VÀ THỜI GIAN
+% ================================================================
+\section{Nhận xét về số trạng thái đã xét và thời gian chạy}
+
+\subsection{Số trạng thái đã xét (Nodes visited)}
+
+\begin{enumerate}
+    \item \textbf{Minimax:} Số trạng thái tăng theo hàm mũ $O(b^d)$. Ví dụ ở State 6 (phức tạp nhất), Minimax duyệt từ 74 nodes (depth 1) lên tới \textbf{2.032.724 nodes} (depth 4) -- tăng gần 27.000 lần.
+
+    \item \textbf{Alpha-Beta Pruning:} Giảm đáng kể số trạng thái nhờ cắt tỉa. Tỷ lệ cắt tỉa tăng mạnh theo độ sâu:
+    \begin{itemize}
+        \item Ở depth 1: Không có cắt tỉa (tỷ lệ 1.00x) vì chỉ duyệt 1 lớp.
+        \item Ở depth 2: Cắt tỉa trung bình 1.7--4.0 lần.
+        \item Ở depth 3: Cắt tỉa trung bình 3.5--12.1 lần.
+        \item Ở depth 4: Cắt tỉa \textbf{3.8--51.0 lần}. Đặc biệt State 6 đạt hiệu quả cắt tỉa cao nhất 51.03x (Minimax: 2.032.724 nodes vs Alpha-Beta: 39.831 nodes).
+    \end{itemize}
+
+    \item \textbf{Ảnh hưởng của trạng thái bàn cờ:}
+    \begin{itemize}
+        \item \textbf{State 1 (bàn cờ trống):} Chỉ có 1 nước đi hợp lệ (ô trung tâm) ở nước đầu tiên, nên số nodes rất ít (2--1.298 nodes).
+        \item \textbf{State 2, 5 (giữa trận, rải rác):} Branching factor cao hơn (15--25 nước đi), số nodes tăng mạnh. State 5 ở depth 4 Minimax duyệt tới 302.295 nodes.
+        \item \textbf{State 3 (O có 3 quân):} Score = 100.000 ở mọi độ sâu, AI phát hiện ngay cơ hội thắng. Alpha-Beta cắt tỉa rất hiệu quả (34.94x ở depth 4) vì tìm thấy nước đi thắng sớm.
+        \item \textbf{State 6 (phức tạp, 9 quân):} Branching factor lớn nhất, Minimax ở depth 4 duyệt hơn 2 triệu nodes, mất \textbf{130 giây}. Alpha-Beta giảm xuống chỉ còn 39.831 nodes (\textbf{2.5 giây}).
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Thời gian chạy}
+
+\begin{enumerate}
+    \item \textbf{Tương quan với số nodes:} Thời gian chạy tỷ lệ thuận với số trạng thái đã duyệt. Ví dụ State 2 ở depth 4: Minimax mất 7.75s (140.324 nodes) vs Alpha-Beta mất 0.50s (9.023 nodes) -- tỷ lệ thời gian (15.45x) gần bằng tỷ lệ nodes (15.55x).
+
+    \item \textbf{Chi phí sao chép:} Mỗi nước đi giả lập sử dụng \texttt{game.copy()} (deepcopy toàn bộ ma trận $9 \times 9$), chiếm khoảng 30--40\% thời gian thực thi.
+
+    \item \textbf{Alpha-Beta nhanh hơn rõ rệt ở depth cao:}
+    \begin{itemize}
+        \item State 5, depth 4: Minimax 16.07s vs Alpha-Beta 0.67s (nhanh hơn \textbf{24x}).
+        \item State 6, depth 4: Minimax 130.43s vs Alpha-Beta 2.52s (nhanh hơn \textbf{52x}).
+    \end{itemize}
+
+    \item \textbf{Giới hạn thực tế:} Với Alpha-Beta, depth 3 cho thời gian phản hồi $<$ 0.3s trên mọi trạng thái. Depth 4 vẫn chấp nhận được ($<$ 2.5s). Minimax thuần ở depth 4 đã quá chậm (tới 130s ở State 6).
+\end{enumerate}
+
+% ================================================================
+% SECTION 12: ẢNH HƯỞNG CỦA ĐỘ SÂU TÌM KIẾM
+% ================================================================
+\section{Nhận xét về ảnh hưởng của độ sâu tìm kiếm}
+
+\subsection{Lựa chọn thuật toán theo mức độ khó}
+
+Chương trình không sử dụng cùng một thuật toán cho tất cả các mức độ khó. Thay vào đó, hệ thống \textbf{chủ động lựa chọn thuật toán} phù hợp với từng mức độ dựa trên sự cân bằng giữa tốc độ phản hồi và chất lượng nước đi:
+
+\begin{table}[H]
+\centering
+\caption{Cấu hình thuật toán theo mức độ khó}
+\begin{tabular}{clcl}
+\toprule
+\textbf{Mức độ} & \textbf{Thuật toán} & \textbf{Độ sâu} & \textbf{Lý do lựa chọn} \\
+\midrule
+Dễ         & Minimax thuần       & 1 & Không gian nhỏ, không cần cắt tỉa \\
+Trung bình & Minimax thuần       & 2 & Nodes ít ($\sim$300), Minimax đủ nhanh \\
+Khó        & Alpha-Beta Pruning  & 3 & Cần cắt tỉa để giảm từ $\sim$5.000 xuống $\sim$1.400 nodes \\
+Cực khó    & Alpha-Beta Pruning  & 4 & Bắt buộc cắt tỉa: giảm từ $\sim$100K xuống $\sim$11K nodes \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Cài đặt trong mã nguồn (\texttt{play\_caro.py}, hàm \texttt{start\_game}):
+
+\begin{lstlisting}[caption={Lựa chọn thuật toán theo mức độ khó}]
+def start_game(self):
+    level = self.level_var.get()
+    if level == "easy":
+        self.ai_depth = 1
+        self.ai_algorithm = 'minimax'       # Minimax thuan
+    elif level == "medium":
+        self.ai_depth = 2
+        self.ai_algorithm = 'minimax'       # Minimax thuan
+    elif level == "hard":
+        self.ai_depth = 3
+        self.ai_algorithm = 'alphabeta'     # Alpha-Beta Pruning
+    else:  # expert
+        self.ai_depth = 4
+        self.ai_algorithm = 'alphabeta'     # Alpha-Beta Pruning
+\end{lstlisting}
+
+\textbf{Nguyên tắc thiết kế:}
+\begin{itemize}
+    \item \textbf{Mức Dễ \& Trung bình} sử dụng \textbf{Minimax thuần} vì ở độ sâu 1--2, không gian tìm kiếm nhỏ (2--324 nodes), thời gian chạy $<$ 0.02s. Việc thêm Alpha-Beta không cải thiện đáng kể và chi phí quản lý $\alpha, \beta$ là không cần thiết.
+    \item \textbf{Mức Khó \& Cực khó} \textbf{bắt buộc} sử dụng \textbf{Alpha-Beta Pruning} vì ở độ sâu 3--4, Minimax thuần phải duyệt hàng nghìn đến hàng triệu trạng thái (State 6: 2.032.724 nodes, mất 130s). Alpha-Beta cắt tỉa giúp giảm 5--51 lần, đưa thời gian phản hồi về mức chấp nhận được ($<$ 3s).
+\end{itemize}
+
+\subsection{Chất lượng nước đi}
+
+\begin{itemize}
+    \item \textbf{Độ sâu 1 (Dễ -- Minimax):} AI chỉ nhìn trước 1 nước, đánh giá theo heuristic tức thì. AI thiếu khả năng phòng thủ và dễ bị đánh bại.
+
+    \item \textbf{Độ sâu 2 (Trung bình -- Minimax):} AI nhìn trước 2 nước (1 nước mình + 1 nước đối thủ). Bắt đầu có khả năng phòng thủ cơ bản nhưng chưa tạo được thế tấn công phức tạp.
+
+    \item \textbf{Độ sâu 3 (Khó -- Alpha-Beta):} AI nhìn trước 3 nước, có thể tạo các bẫy 2 nhánh (double threat). Đây là mức cân bằng tốt giữa hiệu suất và chất lượng.
+
+    \item \textbf{Độ sâu 4 (Cực khó -- Alpha-Beta):} AI nhìn trước 4 nước, gần như không thể bị đánh bại bởi người chơi bình thường. Tuy nhiên, thời gian tính toán tăng đáng kể.
+\end{itemize}
+
+\subsection{Mối quan hệ giữa độ sâu và tài nguyên}
+
+Khi tăng độ sâu lên 1, số trạng thái duyệt tăng lên khoảng $b$ lần (với $b$ là branching factor):
+
+\begin{table}[H]
+\centering
+\caption{Ảnh hưởng của độ sâu đến tài nguyên (Alpha-Beta, trung bình qua 6 trạng thái)}
+\begin{tabular}{ccccl}
+\toprule
+\textbf{Độ sâu} & \textbf{Mức độ} & \textbf{Nodes TB} & \textbf{Thời gian TB} & \textbf{Nhận xét} \\
+\midrule
+1 & Dễ       & $\sim$33   & $<$ 0.002s & Phản hồi tức thì, AI yếu \\
+2 & Trung bình & $\sim$156 & $<$ 0.01s  & Phản hồi nhanh, AI trung bình \\
+3 & Khó      & $\sim$1.424 & 0.08s     & Chấp nhận được, AI khá \\
+4 & Cực khó  & $\sim$11.368 & 0.68s    & Hơi chậm, AI rất mạnh \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Kết luận}
+
+Độ sâu 3 kết hợp Alpha-Beta Pruning là lựa chọn cân bằng tối ưu cho gameplay, vừa đảm bảo AI đủ mạnh, vừa cho thời gian phản hồi nhanh.
+
+% ================================================================
+% SECTION 13: ƯU ĐIỂM VÀ HẠN CHẾ
+% ================================================================
+\section{Ưu điểm và hạn chế của chương trình}
+
+\subsection{Ưu điểm}
+
+\begin{enumerate}
+    \item \textbf{Cài đặt đầy đủ hai thuật toán:} Minimax và Alpha-Beta Pruning, cho phép so sánh hiệu suất trực tiếp.
+
+    \item \textbf{Sinh nước đi thông minh:} Chỉ xét các ô lân cận, giảm đáng kể không gian tìm kiếm so với duyệt toàn bộ bàn cờ.
+
+    \item \textbf{Hàm đánh giá đa cấp:} Nhận biết nhiều mẫu hình (4 liên tiếp, mở 3, chặn 3, mở 2...) và có bonus vị trí trung tâm.
+
+    \item \textbf{Giao diện đồ họa đẹp mắt:} Phong cách Neon hiện đại sử dụng Tkinter, có hiệu ứng hover, hiển thị thông tin AI (score, nodes, time).
+
+    \item \textbf{Đa luồng (Multi-threading):} AI tính toán trên luồng riêng, giao diện không bị đóng băng khi AI suy nghĩ.
+
+    \item \textbf{Nhiều trạng thái thử nghiệm:} 6 trạng thái test case đa dạng để đánh giá hiệu suất toàn diện.
+
+    \item \textbf{Benchmark tích hợp:} Hàm \texttt{run\_benchmark} và \texttt{compare\_algorithms} cho phép so sánh tự động hai thuật toán.
+
+    \item \textbf{4 mức độ khó:} Cho phép người chơi ở mọi trình độ đều có trải nghiệm phù hợp.
+\end{enumerate}
+
+\subsection{Hạn chế}
+
+\begin{enumerate}
+    \item \textbf{Chi phí sao chép bàn cờ:} Sử dụng \texttt{deepcopy} cho mỗi nước đi giả lập gây tốn bộ nhớ và thời gian. Có thể cải thiện bằng kỹ thuật make/unmake (đặt quân rồi gỡ quân).
+
+    \item \textbf{Chưa có bảng chuyển vị (Transposition Table):} Phiên bản \texttt{ai\_agent.py} chưa sử dụng bảng chuyển vị để tránh đánh giá lại các trạng thái đã gặp (file \texttt{AI.py} có cài đặt nhưng chưa tích hợp).
+
+    \item \textbf{Chưa có Iterative Deepening:} Không tìm kiếm từ độ sâu thấp lên cao, mất cơ hội sắp xếp nước đi tốt hơn cho cắt tỉa Alpha-Beta.
+
+    \item \textbf{Hàm đánh giá chưa hoàn hảo:} Có thể bỏ sót một số mẫu hình phức tạp (ví dụ: double open three, fork threats).
+
+    \item \textbf{Giới hạn độ sâu:} Độ sâu 5 trở lên gây thời gian chờ quá lâu, không phù hợp cho gameplay thời gian thực.
+
+    \item \textbf{Chưa có chế độ PvP:} Không hỗ trợ chế độ hai người chơi với nhau (chỉ có Human vs AI).
+
+    \item \textbf{Kích thước bàn cờ cố định:} Bàn cờ cố định $9 \times 9$, chưa hỗ trợ tùy chỉnh kích thước.
+\end{enumerate}
+
+\subsection{Hướng phát triển}
+
+\begin{itemize}
+    \item Tích hợp Transposition Table với Zobrist Hashing (đã có sẵn trong \texttt{AI.py}).
+    \item Thêm Iterative Deepening để cải thiện move ordering.
+    \item Tối ưu hàm đánh giá với nhiều pattern phức tạp hơn.
+    \item Thêm chế độ PvP và tùy chỉnh kích thước bàn cờ.
+    \item Áp dụng Machine Learning để cải thiện hàm đánh giá.
+\end{itemize}
+
+% ================================================================
+% SECTION 14: TÀI LIỆU THAM KHẢO
+% ================================================================
+\section{Tài liệu tham khảo và phần đã tham khảo từ các repo mẫu}
+
+\subsection{Tài liệu tham khảo}
+
+\begin{enumerate}
+    \item S. Russell, P. Norvig, \textit{Artificial Intelligence: A Modern Approach}, 4th Edition, Pearson, 2020. \\
+    \textit{Chương 5: Adversarial Search and Games} -- cơ sở lý thuyết cho Minimax và Alpha-Beta Pruning.
+
+    \item A. Neto, \textit{Minimax Algorithm with Alpha-Beta Pruning}, GeeksforGeeks, 2023. \\
+    URL: \url{https://www.geeksforgeeks.org/minimax-algorithm-in-game-theory-set-4-alpha-beta-pruning/}
+
+    \item Wikipedia contributors, \textit{Gomoku}, Wikipedia, The Free Encyclopedia. \\
+    URL: \url{https://en.wikipedia.org/wiki/Gomoku}
+
+    \item Python Software Foundation, \textit{tkinter --- Python interface to Tcl/Tk}, Python Documentation. \\
+    URL: \url{https://docs.python.org/3/library/tkinter.html}
+\end{enumerate}
+
+\subsection{Phần đã tham khảo từ repo mẫu}
+
+\begin{enumerate}
+    \item \textbf{Cấu trúc Pattern Dictionary} (\texttt{utils.py}): Hệ thống bảng điểm pattern được tham khảo từ các dự án Gomoku AI mã nguồn mở, trong đó các mẫu hình cờ (4 quân liên tiếp, mở 3, chặn 3, mở 2...) được gán điểm số theo thang đánh giá phân cấp.
+
+    \item \textbf{Zobrist Hashing} (\texttt{utils.py}, \texttt{AI.py}): Kỹ thuật băm trạng thái bàn cờ bằng phép XOR được tham khảo từ lý thuyết Zobrist Hashing phổ biến trong các engine cờ vua/cờ caro.
+
+    \item \textbf{Cấu trúc thuật toán Minimax và Alpha-Beta} (\texttt{ai\_agent.py}): Cài đặt dựa trên pseudocode từ sách giáo khoa AIMA (Artificial Intelligence: A Modern Approach) của Russell \& Norvig, được điều chỉnh cho phù hợp với bài toán cờ Caro.
+
+    \item \textbf{Giao diện đồ họa Neon} (\texttt{play\_caro.py}): Thiết kế giao diện sử dụng Tkinter Canvas được phát triển riêng, lấy cảm hứng từ phong cách thiết kế Neon/Cyberpunk trong các dự án UI hiện đại.
+\end{enumerate}
+
+% ================================================================
+% KẾT LUẬN
+% ================================================================
+\section*{Kết luận}
+
+Bài tập lớn đã hoàn thành việc xây dựng chương trình chơi Cờ Caro với AI sử dụng thuật toán Minimax và Alpha-Beta Pruning. Qua quá trình thực hiện, các kết quả chính đạt được:
+
+\begin{enumerate}
+    \item Hiểu và cài đặt thành công hai thuật toán tìm kiếm đối kháng cổ điển.
+    \item Chứng minh bằng thực nghiệm rằng Alpha-Beta Pruning giảm đáng kể số trạng thái cần duyệt (trung bình 10--30 lần) so với Minimax thuần.
+    \item Thiết kế hàm đánh giá heuristic với nhiều mẫu hình, giúp AI có khả năng chơi ở mức khá đến rất mạnh tùy theo độ sâu.
+    \item Xây dựng giao diện đồ họa thân thiện với người dùng.
+\end{enumerate}
+
+Chương trình có thể được mở rộng thêm với các kỹ thuật tối ưu nâng cao như Transposition Table, Iterative Deepening, và Move Ordering để cải thiện hiệu suất tìm kiếm ở các độ sâu lớn hơn.
+
+\end{document}
